@@ -11,5 +11,7 @@ Route::get('/', function () {
 Route::post('/register', [UserController::class,'register'])->name('register.store');;
 Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register.show');
 Route::get('/logout', [UserController::class, 'logout'])->name('logoutCustomer');
+Route::get('/addEmployee', [UserController::class, 'addEmployee'])->name('admin.addEmployee');
+
 
 

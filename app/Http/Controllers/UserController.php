@@ -55,6 +55,7 @@ class UserController extends Controller
 
         return redirect('/'); // Redirect to home or login page
     }
+    public function addEmployee(){}
 
 
 }

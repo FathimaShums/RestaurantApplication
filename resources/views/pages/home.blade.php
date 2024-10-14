@@ -9,9 +9,9 @@
 <!-- Content for employees -->
 
 @elseif(Auth::user()->role == 'Admin')
-<!-- Content for the admin -->
+<!--form to add an employee-->
 <div>
-    <form action="/addEmployee" method="post">
+    <form action="{{ route('admin.addEMployee') }}" method="post">
         <div class=" flex flex-cols-2">
             <input type="text" name="EmployeeFirstName" placeholder="First name">
              <input type="text" name="EmployeeSurname" placeholder="Surname">
