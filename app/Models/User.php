@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -65,6 +66,13 @@ class User extends Authenticatable
             'name' => $data['name'],
             'password' => Hash::make($data['password']),
             'user_type' => $data['user_type'] ?? 'Customer', 
+        ]);
+    }
+    public static function attemptLogin(array $credentials)
+    {
+        return Auth::attempt([
+            'name' => $credentials['name'], 
+            'password' => $credentials['password']
         ]);
     }
 }
