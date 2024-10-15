@@ -3,16 +3,15 @@
 @section('title', 'Home Page')
 
 @section('content')
-@if(Auth::check() && Auth::user()->role == 'Customer')
-    <!-- Customer specific content here -->
-
-@elseif(Auth::check() && Auth::user()->role == 'Employee')
+@auth
+@if(auth()->user()->user_type === 'Employee')
 <div>
     <p>Welcome, Employee! Your designation is: {{ Auth::user()->additional_info }}</p>
 </div>
-
-@elseif(Auth::check() && Auth::user()->role == 'Admin')
-
+@elseif(auth()->user()->user_type === 'Customer')
+  <!-- Customer specific content here -->
+  <h1>customersss</h1>
+@elseif(auth()->user()->user_type === 'Admin')
 <div>
     <h3>Add New Employee</h3>
     <form action="{{ route('admin.addEmployee') }}" method="post">
@@ -32,7 +31,6 @@
         <button type="submit">Add Employee</button>
     </form>
 </div>
-
 <div>
     <h3>Employee List</h3>
     <table>
@@ -64,10 +62,21 @@
         </tbody>
     </table>
 </div>
-
 @else
-    <div>
-        <p>Welcome, Guest! </p>
-    </div>
+<div>
+    <p>Welcome, Guest! </p>
+</div>
 @endif
+@endauth
+
+  
+
+
+
+
+
+
+
+
+
 @endsection
