@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    //function for customer to register
     public function register(Request $request)
     {   
     $validator = Validator::make($request->all(), [
@@ -39,17 +40,19 @@ class UserController extends Controller
 
     Auth::login($user);
     return redirect()->route('pages.home');
-        
+       
+    //function to load registration page
     }
     public function showRegisterForm(){
         return view('pages.customer-register');
 
     }
-    
+    //function to load login page
      public function showLoginForm()
      {
          return view('pages.login'); 
      }
+     //function to login
     public function login(Request $request)
 {
     $credentials = $request->validate([
@@ -66,6 +69,7 @@ class UserController extends Controller
         'name' => 'The provided credentials do not match our records.',
     ])->onlyInput('name');
 }
+//function to logout
     public function logout(Request $request)
     {
         Auth::logout();
@@ -73,9 +77,85 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/'); // Redirect to home or login page
+        return redirect('/'); 
     }
-    public function addEmployee(){}
+//function to add an employee
+   
+ public function addEmployee(Request $request)
+     {
+        if (!Auth::check() || Auth::user()->user_type !== 'Admin') {
+            return redirect()->route('pages.home')->with('error', 'Unauthorized access');
+        }
+         $validator = Validator::make($request->all(), [
+             'EmployeeFirstName' => 'required|string|max:25',
+             'EmployeeSurname' => 'required|string|max:25',
+             'EmployeePhone' => 'nullable|string|max:12',
+             'EmployeeEmail' => 'required|string|email|max:100|unique:users,email',
+             'EmployeeAddress' => 'nullable|string|max:255',
+             'name' => 'required|string|max:255|unique:users,name',
+             'password' => 'required|string|min:8',
+             'designation' => 'required|string|max:100',
+         ]);
+ 
+         if ($validator->fails()) {
+             return redirect()->back()
+                 ->withErrors($validator)
+                 ->withInput();
+         }
+ 
+         $userData = [
+             'first_name' => $request->EmployeeFirstName,
+             'last_name' => $request->EmployeeSurname,
+             'phone' => $request->EmployeePhone,
+             'email' => $request->EmployeeEmail,
+             'address' => $request->EmployeeAddress,
+             'name' => $request->name,
+             'password' => $request->password,
+             'user_type' => 'Employee',
+             'additional_info' => $request->designation,
+         ];
+ 
+         User::createNewUser($userData);
+ 
+         return redirect()->route('pages.home')->with('success', 'Employee added successfully');
+     }
+ 
+
+//function to view all employees
+public function showHome()
+    {
+        $employees = [];
+        if (Auth::check() && Auth::user()->user_type == 'Admin') {
+            $employees = User::where('user_type', 'Employee')->get();
+        }
+        return view('pages.home', compact('employees'));
+    }
+//function to delete an employee
+public function deleteEmployee($id)
+    {
+        if (!Auth::check() || Auth::user()->user_type !== 'Admin') {
+            return redirect()->route('pages.home')->with('error', 'Unauthorized access');
+        }
+
+        $employee = User::findOrFail($id);
+        $employee->delete();
+        return redirect()->route('pages.home')->with('success', 'Employee deleted successfully');
+    }
+
+
+    //these should deal with foodItem class?
+//function to add new food item
+
+//function to view all food items
+
+//function to delete a food item
+    //these should deal with OrderItem or something
+//function to add an item to cart(should also specify quantity)
+
+//function to delete an item off the cart 
+
+//function to place order?
+//order Id should be generated asw
 
 
 }

@@ -66,6 +66,7 @@ class User extends Authenticatable
             'name' => $data['name'],
             'password' => Hash::make($data['password']),
             'user_type' => $data['user_type'] ?? 'Customer', 
+            'additional_info' => $data['additional_info'] ?? null,
         ]);
     }
     public static function attemptLogin(array $credentials)
