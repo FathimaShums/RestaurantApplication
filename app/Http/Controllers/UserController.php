@@ -48,10 +48,10 @@ class UserController extends Controller
 
     }
     //function to load login page
-     public function showLoginForm()
-     {
-         return view('pages.login'); 
-     }
+    //  public function showLoginForm()
+    //  {
+    //      return view('pages.login'); 
+    //  }
      //function to login
     public function login(Request $request)
 {
@@ -62,7 +62,7 @@ class UserController extends Controller
 
     if (User::attemptLogin($credentials)) {
         $request->session()->regenerate();
-        return redirect()->intended('pages.home');
+        return redirect()->route('pages.home');
     }
 
     return back()->withErrors([

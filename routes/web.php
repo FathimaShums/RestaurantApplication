@@ -18,4 +18,3 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logoutCustomer')
 Route::post('/admin/add-employee', [UserController::class, 'addEmployee'])->name('admin.addEmployee');
 Route::delete('/admin/delete-employee/{id}', [UserController::class, 'deleteEmployee'])->name('admin.deleteEmployee');
 Route::post('/login', [UserController::class, 'login'])->name('login');
-Route::get('/login', [UserController::class, 'showLoginForm'])->name('login.show');
