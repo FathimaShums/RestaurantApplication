@@ -12,7 +12,7 @@ Route::post('/register', [UserController::class,'register'])->name('register.sto
 Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register.show');
 Route::get('/logout', [UserController::class, 'logout'])->name('logoutCustomer');
 
-
+Route::get('/', [UserController::class, 'showHome'])->name('admin.home');
 
 
 Route::post('/admin/add-employee', [UserController::class, 'addEmployee'])->name('admin.addEmployee');
