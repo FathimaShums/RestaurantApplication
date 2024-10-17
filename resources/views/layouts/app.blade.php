@@ -29,7 +29,7 @@
                     Login
                 </button>
                 <!-- Modal -->
-    <div id="loginModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 hidden justify-center items-center z-50">
+    <div id="loginModal" class="fixed text-black inset-0 bg-gray-800 bg-opacity-50 hidden justify-center items-center z-50">
         <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
             <h2 class="text-lg font-bold mb-4">Login</h2>
             <form action="{{ route('login') }}" method="POST">
@@ -56,6 +56,7 @@
 
     <footer class="bg-green-500 text-white p-4">
         <p>Your Application Footer</p>
+       
     </footer>
 
     @vite('resources/js/app.js')
