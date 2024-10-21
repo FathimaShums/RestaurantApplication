@@ -61,7 +61,12 @@ class UserController extends Controller
     ]);
 
     if (User::attemptLogin($credentials)) {
+        
         $request->session()->regenerate();
+         // Check if the user is an admin
+         if (Auth::user()->user_type === 'Admin') {
+            return redirect()->route('admin.home'); // Redirect to the admin home route
+        }
         return redirect()->route('pages.home');
     }
 
